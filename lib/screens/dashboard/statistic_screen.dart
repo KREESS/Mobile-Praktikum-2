@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/movie_card.dart';
-// import 'package:flutter_application_1/components/stat_card.dart';
 
 class StatisticScreen extends StatelessWidget {
   const StatisticScreen({super.key});
@@ -9,17 +8,27 @@ class StatisticScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false, // Menghilangkan tombol back
         title: const Text('Filmore'),
         backgroundColor: Colors.teal,
         elevation: 4,
+        actions: [
+          Tooltip(
+            message: 'Logout', // Pesan yang muncul saat hover
+            child: IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed('/login');
+              },
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
-        // Wrap the entire body with SingleChildScrollView
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title
             Text(
               'Statistik Anda',
               style: TextStyle(
@@ -29,20 +38,16 @@ class StatisticScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-
-            // Stat Cards Row 1 (Make each card equally wide with Expanded)
             Row(
               children: [
                 Expanded(
                     child: buildStatCard('Total Ditonton', 120, Colors.blue)),
-                SizedBox(width: 15), // Adding some space between cards
+                SizedBox(width: 15),
                 Expanded(
                     child: buildStatCard('Total Favorit', 50, Colors.pink)),
               ],
             ),
             SizedBox(height: 20),
-
-            // Stat Cards Row 2
             Row(
               children: [
                 Expanded(
@@ -53,8 +58,6 @@ class StatisticScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 40),
-
-            // Recommendation Title
             Text(
               'Rekomendasi Film',
               style: TextStyle(
@@ -64,11 +67,8 @@ class StatisticScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-
-            // Movie Cards List
             Container(
-              // Use a container to wrap the ListView and avoid using Expanded
-              height: 250, // Set a fixed height for the horizontal ListView
+              height: 250,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
@@ -91,11 +91,11 @@ class StatisticScreen extends StatelessWidget {
 
   Widget buildStatCard(String title, int count, Color color) {
     return Card(
-      elevation: 6, // Adding shadow
+      elevation: 6,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12), // Rounded corners
+        borderRadius: BorderRadius.circular(12),
       ),
-      color: color.withOpacity(0.1), // Light color background
+      color: color.withOpacity(0.1),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

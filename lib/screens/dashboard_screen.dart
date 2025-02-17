@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/dashboard/statistic_screen.dart';
 import 'package:flutter_application_1/screens/dashboard/film_screen.dart'; // Import FilmScreen
+import 'package:flutter_application_1/screens/dashboard/profile_screen.dart'; // Import ProfileScreen
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -16,6 +17,7 @@ class DashboardScreenState extends State<DashboardScreen> {
   static const List<Widget> _pages = <Widget>[
     StatisticScreen(), // Home page
     FilmScreen(), // Film page
+    ProfileScreen(), // Profile page
   ];
 
   void _onItemTapped(int index) {
@@ -43,6 +45,10 @@ class DashboardScreenState extends State<DashboardScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.movie),
             label: 'Film',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
       ),
