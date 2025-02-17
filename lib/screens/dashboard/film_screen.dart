@@ -11,7 +11,7 @@ class FilmScreen extends StatelessWidget {
       'assets/images/film3.jpeg',
       'assets/images/film4.jpeg',
       'assets/images/film5.jpeg',
-      'assets/images/film1.jpeg',
+      'assets/images/film6.jpeg',
       'assets/images/film7.jpeg',
       'assets/images/film8.jpeg',
     ];
