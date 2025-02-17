@@ -17,25 +17,101 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   void _register() async {
     if (_formKey.currentState!.validate()) {
-      // Tampilkan halaman loading
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const LoadingScreen()),
+      // Tampilkan dialog konfirmasi
+      bool? confirm = await showDialog<bool>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0), // Rounded corners
+            ),
+            title: Row(
+              children: [
+                const Icon(
+                  Icons.warning_amber_rounded,
+                  color: Colors.orange,
+                  size: 28,
+                ),
+                const SizedBox(width: 10),
+                const Text(
+                  'Konfirmasi Pendaftaran',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+              ],
+            ),
+            content: const Text(
+              'Apakah Anda yakin ingin melanjutkan pendaftaran?',
+              style: TextStyle(
+                fontSize: 16,
+                color: Color.fromARGB(221, 255, 255, 255),
+              ),
+            ),
+            actionsPadding: const EdgeInsets.symmetric(horizontal: 20),
+            actions: [
+              // Tombol Batal
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false); // Tutup dialog dan batalkan
+                },
+                child: const Text(
+                  'Batal',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+              // Tombol OK
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true); // Lanjutkan pendaftaran
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Palette.tomato, // Gunakan warna sesuai tema
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text(
+                  'OK',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 255, 254, 254),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       );
 
-      // Simulasikan proses pendaftaran
-      await Future.delayed(const Duration(seconds: 5));
+      // Jika user memilih OK, lanjutkan proses pendaftaran
+      if (confirm == true) {
+        // Tampilkan halaman loading
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const LoadingScreen()),
+        );
 
-      // Navigasi ke halaman login setelah pendaftaran selesai
-      if (mounted) {
-        Navigator.pop(context); // Tutup loading screen
-        Navigator.pushReplacementNamed(context, '/login');
+        // Simulasikan proses pendaftaran
+        await Future.delayed(const Duration(seconds: 5));
+
+        // Navigasi ke halaman login setelah pendaftaran selesai
+        if (mounted) {
+          Navigator.pop(context); // Tutup loading screen
+          Navigator.pushReplacementNamed(context, '/login');
+        }
+
+        // Tampilkan pesan sukses
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Pendaftaran Berhasil, Silahkan Login!')),
+        );
       }
-
-      // Tampilkan pesan sukses
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Pendaftaran Berhasil!')),
-      );
     }
   }
 
